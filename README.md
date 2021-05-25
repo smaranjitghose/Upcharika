@@ -1,5 +1,7 @@
-# Upcharika
+<h1 align = "center">Upcharika</h1>
+
 <p align = "center"><img src = "./readme_assets/banner.jpg" alt="Banner" width="540" height="360"></p>
+
 A unique flutter application aimed at helping people getting their vitals using Photoplethysmography and Computer Vision
 
 ## Current Goals:
