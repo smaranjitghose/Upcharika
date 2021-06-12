@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,8 @@ class HomePageView extends State<HomePage> with SingleTickerProviderStateMixin {
   CameraController _controller;
   double _alpha = 0.3; // factor for the mean value
   AnimationController _animationController;
-  double _iconScale = 1;
+  double _buttonScale = 1;
+  String buttonText = "Check Heart Rate";
   int _bpm = 0; // beats per minute
   int _fs = 30; // sampling frequency (fps)
   int _windowLen = 30 * 6; // window length to display - 6 seconds
@@ -35,7 +37,7 @@ class HomePageView extends State<HomePage> with SingleTickerProviderStateMixin {
     _animationController
       ..addListener(() {
         setState(() {
-          _iconScale = 1.0 + _animationController.value * 0.4;
+          _buttonScale = 1.0 + _animationController.value * 0.4;
         });
       });
   }
@@ -54,6 +56,9 @@ class HomePageView extends State<HomePage> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Upcharika"),
+      ),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
@@ -113,7 +118,7 @@ class HomePageView extends State<HomePage> with SingleTickerProviderStateMixin {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            "Estimated BPM",
+                            "Estimated Heart Rate(BPM)",
                             style: TextStyle(fontSize: 18, color: Colors.grey),
                           ),
                           Text(
@@ -126,26 +131,51 @@ class HomePageView extends State<HomePage> with SingleTickerProviderStateMixin {
                     ),
                   ],
                 )),
+            SizedBox(
+              width: 40,
+              height: 40,
+            ),
             Expanded(
               flex: 1,
               child: Center(
-                child: Transform.scale(
-                  scale: _iconScale,
-                  child: IconButton(
-                    icon:
-                        Icon(_toggled ? Icons.favorite : Icons.favorite_border),
-                    color: Colors.red,
-                    iconSize: 128,
-                    onPressed: () {
-                      if (_toggled) {
-                        _untoggle();
-                      } else {
-                        _toggle();
-                      }
-                    },
-                  ),
+                child: Column(
+                  children: [
+                    Transform.scale(
+                      scale: _buttonScale,
+                      child: RaisedButton(
+                        child: Text(
+                          buttonText,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        color: Colors.blue,
+                        onPressed: () {
+                          if (_toggled) {
+                            buttonText = "Check Heart Rate";
+                            _untoggle();
+                          } else {
+                            buttonText = "Stop";
+                            _toggle();
+                          }
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                      height: 20,
+                    ),
+                    Text(
+                        "Cover both the camera and the flash with your finger"),
+                  ],
                 ),
               ),
+            ),
+            Text(
+              "Graph",
+              style: TextStyle(fontSize: 20),
+            ),
+            SizedBox(
+              width: 20,
+              height: 20,
             ),
             Expanded(
               flex: 1,

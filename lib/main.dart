@@ -91,6 +91,10 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Text('Check SpO\u2082 levels'),
             ),
+            SizedBox(
+              width: 20,
+              height: 20,
+            ),
             Text(
               istapped,
               textScaleFactor: 1,
