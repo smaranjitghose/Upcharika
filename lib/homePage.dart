@@ -142,10 +142,12 @@ class HomePageView extends State<HomePage> with SingleTickerProviderStateMixin {
                   children: [
                     Transform.scale(
                       scale: _buttonScale,
-                      child: RaisedButton(
+                      child: MaterialButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)),
                         child: Text(
                           buttonText,
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.white, fontSize: 15),
                         ),
                         color: Colors.blue,
                         onPressed: () {
@@ -164,7 +166,8 @@ class HomePageView extends State<HomePage> with SingleTickerProviderStateMixin {
                       height: 20,
                     ),
                     Text(
-                        "Cover both the camera and the flash with your finger"),
+                      "Cover both the camera and the flash with your finger",
+                    ),
                   ],
                 ),
               ),
