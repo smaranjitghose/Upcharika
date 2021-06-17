@@ -99,9 +99,9 @@ class _MyHomePageState extends State<MyHomePage> {
               istapped,
               textScaleFactor: 1,
             ),
+            Image.asset("images/Upcharika.png", height: 250.0,),
             SizedBox(
-              width: 340,
-              height: 340,
+              height: 40,
             ),
             Text("Made with ❤️ in Open Source by 🇮🇳")
           ],
