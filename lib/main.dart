@@ -64,7 +64,9 @@ class _MyHomePageState extends State<MyHomePage> {
               width: 20,
               height: 20,
             ),
-            RaisedButton(
+            MaterialButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30)),
               padding: const EdgeInsets.all(20),
               textColor: Colors.white,
               color: Colors.blue,
@@ -74,13 +76,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   MaterialPageRoute(builder: (context) => HomePage()),
                 );
               },
-              child: Text('Check Your Heart Rate'),
+              child: Text(
+                'Check Your Heart Rate',
+                style: TextStyle(fontSize: 15),
+              ),
             ),
             SizedBox(
               width: 20,
               height: 20,
             ),
-            RaisedButton(
+            MaterialButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30)),
               padding: const EdgeInsets.all(20),
               textColor: Colors.white,
               color: Colors.blue,
@@ -89,7 +96,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   istapped = 'Coming Soon.';
                 });
               },
-              child: Text('Check SpO\u2082 levels'),
+              child: Text(
+                'Check SpO\u2082 levels',
+                style: TextStyle(fontSize: 15),
+              ),
             ),
             SizedBox(
               width: 20,
