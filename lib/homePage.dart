@@ -13,7 +13,8 @@ class HomePage extends StatefulWidget {
   }
 }
 
-class HomePageView extends State<HomePage> with SingleTickerProviderStateMixin {
+class HomePageView extends State<HomePage>
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   bool _toggled = false; // toggle button value
   List<SensorValue> _data = List<SensorValue>(); // array to store the values
   CameraController _controller;
@@ -28,6 +29,7 @@ class HomePageView extends State<HomePage> with SingleTickerProviderStateMixin {
   double _avg; // store the average value during calculation
   DateTime _now; // store the now Datetime
   Timer _timer; // timer for image processing
+  // bool flash = true;
 
   @override
   void initState() {
@@ -40,6 +42,7 @@ class HomePageView extends State<HomePage> with SingleTickerProviderStateMixin {
           _buttonScale = 1.0 + _animationController.value * 0.4;
         });
       });
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
@@ -51,6 +54,19 @@ class HomePageView extends State<HomePage> with SingleTickerProviderStateMixin {
     _animationController?.stop();
     _animationController?.dispose();
     super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.detached) return;
+
+    final inbackground = (state == AppLifecycleState.paused);
+
+    if (inbackground) {
+      _controller.setFlashMode(FlashMode.off);
+    }
   }
 
   @override
@@ -243,7 +259,7 @@ class HomePageView extends State<HomePage> with SingleTickerProviderStateMixin {
       List _cameras = await availableCameras();
       _controller = CameraController(_cameras.first, ResolutionPreset.low);
       await _controller.initialize();
-      Future.delayed(Duration(milliseconds: 100)).then((onValue) {
+      Future.delayed(Duration(milliseconds: 50)).then((onValue) {
         _controller.setFlashMode(FlashMode.torch);
       });
       _controller.startImageStream((CameraImage image) {
