@@ -29,7 +29,6 @@ class HomePageView extends State<HomePage>
   double _avg; // store the average value during calculation
   DateTime _now; // store the now Datetime
   Timer _timer; // timer for image processing
-  // bool flash = true;
 
   @override
   void initState() {
