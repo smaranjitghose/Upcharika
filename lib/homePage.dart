@@ -15,6 +15,7 @@ class HomePage extends StatefulWidget {
 
 class HomePageView extends State<HomePage>
     with SingleTickerProviderStateMixin, WidgetsBindingObserver {
+  // WidgetsBindingObserver is used to know if our app is in background or active or closed
   bool _toggled = false; // toggle button value
   List<SensorValue> _data = List<SensorValue>(); // array to store the values
   CameraController _controller;
@@ -29,6 +30,7 @@ class HomePageView extends State<HomePage>
   double _avg; // store the average value during calculation
   DateTime _now; // store the now Datetime
   Timer _timer; // timer for image processing
+  // bool flash = true;
 
   @override
   void initState() {
@@ -41,7 +43,8 @@ class HomePageView extends State<HomePage>
           _buttonScale = 1.0 + _animationController.value * 0.4;
         });
       });
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addObserver(
+        this); // here we are adding observer which will detect in which state our app exists
   }
 
   @override
@@ -53,18 +56,27 @@ class HomePageView extends State<HomePage>
     _animationController?.stop();
     _animationController?.dispose();
     super.dispose();
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance
+        .removeObserver(this); // removing the observer when our app is closed
   }
 
+  // inside this method we will check our app state
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    // here we are checking if the app is in inactive or detached state
+    // and we are returning because we dont want to perform anything when the app is in inactive or detached state
     if (state == AppLifecycleState.inactive ||
         state == AppLifecycleState.detached) return;
 
+    // here we are checking if our state is paused which is when app moves in background
+    // then assigning the boolean value to the boolean variable inbackground
     final inbackground = (state == AppLifecycleState.paused);
 
+    // this if condition is used to perform any task if our app is in the background state
+    // it checks if our app is in background or not and performs the specified task.
     if (inbackground) {
-      _controller.setFlashMode(FlashMode.off);
+      _controller
+          .setFlashMode(FlashMode.off); // this is used to stop the flash light
     }
   }
 
@@ -259,7 +271,8 @@ class HomePageView extends State<HomePage>
       _controller = CameraController(_cameras.first, ResolutionPreset.low);
       await _controller.initialize();
       Future.delayed(Duration(milliseconds: 50)).then((onValue) {
-        _controller.setFlashMode(FlashMode.torch);
+        _controller.setFlashMode(FlashMode
+            .torch); // this is used to start the flash light with a delay of 50 milliseconds.
       });
       _controller.startImageStream((CameraImage image) {
         _image = image;
