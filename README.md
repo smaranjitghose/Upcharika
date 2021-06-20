@@ -1,5 +1,3 @@
-<h1 align = "center">Upcharika</h1>
-
 <p align = "center"><img src = "./readme_assets/banner.jpg" alt="Banner" width="540" height="360"></p>
 
 A unique flutter application aimed at helping people getting their vitals using Photoplethysmography and Computer Vision
@@ -18,9 +16,9 @@ A unique flutter application aimed at helping people getting their vitals using 
 
 ### Our hard-working Project Maintainers👨‍🏫:
 
-| ![](https://avatars.githubusercontent.com/u/46641503?v=4) | ![](https://avatars.githubusercontent.com/u/40017559?v=4) |  ![](https://avatars.githubusercontent.com/u/16633975?v=4) | 
-| :-------------------------------------------------------: | :-------------------------------------------------------: | :---------------------------------------------------: | 
-| [Smaranjit Ghose](https://github.com/smaranjitghose)    |      [Anush Bhatia](https://github.com/anushbhatia)         | [Aditya Jyoti Paul](https://github.com/phreakyphoenix)|
+| ![](https://avatars.githubusercontent.com/u/46641503?v=4) | ![](https://avatars.githubusercontent.com/u/40017559?v=4) |  
+| :-------------------------------------------------------: | :-------------------------------------------------------: |  
+| [Smaranjit Ghose](https://github.com/smaranjitghose)    |      [Anush Bhatia](https://github.com/anushbhatia)         | 
 
 #### Our valuable Contributors👩‍💻👨‍💻 :
 
