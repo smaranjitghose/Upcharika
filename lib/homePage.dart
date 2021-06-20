@@ -29,8 +29,9 @@ class HomePageView extends State<HomePage>
   CameraImage _image; // store the last camera image
   double _avg; // store the average value during calculation
   DateTime _now; // store the now Datetime
-  Timer _timer; // timer for image processing
-  // bool flash = true;
+  Timer _timerImage, // timer for image processing
+      _timer; // timer for timer
+  int seconds = 60;
 
   @override
   void initState() {
@@ -49,7 +50,8 @@ class HomePageView extends State<HomePage>
 
   @override
   void dispose() {
-    _timer?.cancel();
+    _timerImage?.cancel();
+    _timer.cancel();
     _toggled = false;
     _disposeController();
     Wakelock.disable();
@@ -77,6 +79,15 @@ class HomePageView extends State<HomePage>
     if (inbackground) {
       _controller
           .setFlashMode(FlashMode.off); // this is used to stop the flash light
+      _untoggle(); // to stop the BPM estimating process and animation
+      setState(() {
+        buttonText = 'Check Heart Rate'; // to set button text
+        _bpm =
+            0; // to set _bpm to 0 when the app goes in background and BPM estimation is stopped
+        _timer.cancel(); // to cancel the timer when the app moves in background
+        seconds =
+            60; // setting seconds to original value after timer is stopped
+      });
     }
   }
 
@@ -145,8 +156,18 @@ class HomePageView extends State<HomePage>
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Text(
+                            "Timer",
+                            style: TextStyle(fontSize: 18, color: Colors.grey),
+                          ),
+                          Text(
+                            '$seconds',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 32),
+                          ),
+                          Text(
                             "Estimated Heart Rate(BPM)",
                             style: TextStyle(fontSize: 18, color: Colors.grey),
+                            textAlign: TextAlign.center,
                           ),
                           Text(
                             (_bpm > 30 && _bpm < 150 ? _bpm.toString() : "--"),
@@ -236,7 +257,9 @@ class HomePageView extends State<HomePage>
               DateTime.fromMillisecondsSinceEpoch(now - i * 1000 ~/ _fs), 128));
   }
 
+  // method to start the BPM estimating Process
   void _toggle() {
+    startTimer();
     _clearData();
     _initController().then((onValue) {
       Wakelock.enable();
@@ -250,6 +273,7 @@ class HomePageView extends State<HomePage>
     });
   }
 
+  // method to stop the BPM estimation process
   void _untoggle() {
     _disposeController();
     Wakelock.disable();
@@ -257,6 +281,8 @@ class HomePageView extends State<HomePage>
     _animationController?.value = 0.0;
     setState(() {
       _toggled = false;
+      _timer.cancel();
+      seconds = 60;
     });
   }
 
@@ -283,7 +309,7 @@ class HomePageView extends State<HomePage>
   }
 
   void _initTimer() {
-    _timer = Timer.periodic(Duration(milliseconds: 1000 ~/ _fs), (timer) {
+    _timerImage = Timer.periodic(Duration(milliseconds: 1000 ~/ _fs), (timer) {
       if (_toggled) {
         if (_image != null) _scanImage(_image);
       } else {
@@ -356,5 +382,30 @@ class HomePageView extends State<HomePage>
           milliseconds:
               1000 * _windowLen ~/ _fs)); // wait for a new set of _data values
     }
+  }
+
+  // method to start the timer of 60 sec when the checkheartrate button is pressed
+  void startTimer() {
+    const onesec =
+        const Duration(seconds: 1); // here we are declaring the 1 second
+    _timer = Timer.periodic(onesec, (Timer timer) {
+      // periodic method of Timer class is used to call the method again and again at an interval of duration parameter.
+      // till the timer is stopped by the cancel method
+      if (seconds == 0) {
+        setState(() {
+          timer.cancel(); // when the seconds reached to 0 stop the timer
+          seconds =
+              60; // when the timer is stopped set the timer text to 60 again
+          _untoggle(); // stop the BPM estimation process when the timer reached to 0
+          buttonText =
+              "Check Heart Rate"; // when the timer stops change the text to Check Heart Rate because BPM process is stopped
+        });
+      } else {
+        setState(() {
+          seconds -=
+              1; // here we are decreasing the seconds by 1 each time till it reach to 0
+        });
+      }
+    });
   }
 }
