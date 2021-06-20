@@ -30,7 +30,6 @@ class HomePageView extends State<HomePage>
   double _avg; // store the average value during calculation
   DateTime _now; // store the now Datetime
   Timer _timer; // timer for image processing
-  // bool flash = true;
 
   @override
   void initState() {
@@ -77,6 +76,11 @@ class HomePageView extends State<HomePage>
     if (inbackground) {
       _controller
           .setFlashMode(FlashMode.off); // this is used to stop the flash light
+      _untoggle(); // to stop the BPM estimating process and animation
+      setState(() {
+        buttonText = 'Check Heart Rate'; // to set button text
+        _bpm =
+            0; // to set _bpm to 0 when the app goes in background and BPM estimation is stopped
     }
   }
 
