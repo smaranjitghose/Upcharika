@@ -31,6 +31,7 @@ dependencies:
   charts_flutter: ^0.9.0
   wakelock: ^0.1.4+1
   camera: 0.7.0+4
+  path_provider: ^2.0.2
   flutter_card_swipper: ^0.4.0
 
 dev_dependencies:
