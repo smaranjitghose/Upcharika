@@ -1,5 +1,4 @@
 import 'dart:async';
-// import 'dart:html';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
@@ -199,9 +198,6 @@ class HomePageView extends State<HomePage>
                         children: [
                           Transform.scale(
                             scale: _buttonScale,
-                            // child: Row(
-                            //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            //     children: <Widget>[
                             child: MaterialButton(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30)),
