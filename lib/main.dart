@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:upcharika/homePage.dart';
+import 'package:upcharika/onboardingScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Upcharika'),
+      home: OnboardingScreen(),
     );
   }
 }
