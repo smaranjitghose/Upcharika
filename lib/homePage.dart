@@ -84,7 +84,11 @@ class HomePageView extends State<HomePage>
     if (inbackground) {
       _controller
           .setFlashMode(FlashMode.off); // this is used to stop the flash light
+      _untoggle(); // to stop the BPM estimating process and animation of the button
       setState(() {
+        buttonText = 'Check Heart Rate'; // to set button text to Check Heart Rate
+        _bpm =
+            0; // to set _bpm to 0 when the app goes in background and BPM estimation process is stopped
         _timer.cancel(); // to cancel the timer when the app moves in background
         seconds =
             60; // setting seconds to original value after timer is stopped
