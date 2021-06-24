@@ -67,14 +67,16 @@ class _HeartRateState extends State<HeartRate> {
               ));
             } else {
               // or if the list has the values
-              return Container(
+              return Padding(
+                padding: EdgeInsets.all(8),
+                child: Container(
                 child: ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, index) {
                     return Card(
                       color: Colors.blue[100],
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(35)),
+                          borderRadius: BorderRadius.circular(10)),
                       child: ListTile(
                         title:
                             Text("BPM : " + snapshot.data[index][2].toString()),
