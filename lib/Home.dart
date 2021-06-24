@@ -93,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
               width: 340,
               height: 320,
             ),
-            Text("Made with ❤️ in Open Source by 🇮🇳")
+            Text("Made with ❤️ in 🇮🇳")
           ],
         ),
       ),
