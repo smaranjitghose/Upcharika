@@ -81,19 +81,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(fontSize: 15),
               ),
             ),
-            SizedBox(
-              width: 20,
-              height: 20,
-            ),
-            Text(
-              istapped,
-              textScaleFactor: 1,
-            ),
+
+
             SizedBox(
               width: 340,
-              height: 320,
+              height: 300,
             ),
-            Text("Made with ❤️ in Open Source by 🇮🇳")
+            Text("Made with ❤️ in 🇮🇳")
           ],
         ),
       ),

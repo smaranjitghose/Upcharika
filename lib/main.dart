@@ -3,7 +3,7 @@ import 'package:upcharika/Dashboard.dart';
 import 'package:upcharika/HeartRate.dart';
 import 'package:upcharika/Home.dart';
 import 'package:upcharika/homePage.dart';
-import 'package:upcharika/level.dart';
+import 'package:upcharika/Level.dart';
 
 void main() {
   runApp(MyApp());
@@ -35,7 +35,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
     MyHomePage(),
     Dashboard(),
     HeartRate(),
-    level(),
+    Level(),
   ];
 
   void onTappedBar(int index) {
@@ -52,9 +52,10 @@ class _BottomNavbarState extends State<BottomNavbar> {
       ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         onTap: onTappedBar,
         currentIndex: _currentIndex,
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.white,
         showSelectedLabels: false,
         showUnselectedLabels: false,
         items: [
@@ -78,7 +79,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
             ),
           ),
           BottomNavigationBarItem(
-            label: 'Spo2 level',
+            label: 'Spo2 Level',
             icon: Icon(
               Icons.analytics_outlined,
               color: Colors.black,
