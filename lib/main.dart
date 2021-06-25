@@ -56,26 +56,36 @@ class _BottomNavbarState extends State<BottomNavbar> {
         onTap: onTappedBar,
         currentIndex: _currentIndex,
         backgroundColor: Colors.white,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
         items: [
           BottomNavigationBarItem(
-            label: 'Dashboard',
+            label: 'Home',
             icon: Icon(
-                Icons.home, color:
+                Icons.home_outlined, color:
                 Colors.black),
+            activeIcon: Icon(
+              Icons.home_outlined,
+              color: Colors.blue,
+            ),
           ),
           BottomNavigationBarItem(
             label: 'Dashboard',
             icon: Icon(
                 Icons.account_box_outlined,
                 color: Colors.black),
+            activeIcon: Icon(
+              Icons.account_box_outlined,
+              color: Colors.blue,
+            ),
           ),
           BottomNavigationBarItem(
             label: 'Heart Rate',
             icon: Icon(
-              Icons.wallet_membership,
+              Icons.rate_review_outlined,
               color: Colors.black,
+            ),
+            activeIcon: Icon(
+              Icons.rate_review_outlined,
+              color: Colors.blue,
             ),
           ),
           BottomNavigationBarItem(
@@ -83,6 +93,10 @@ class _BottomNavbarState extends State<BottomNavbar> {
             icon: Icon(
               Icons.analytics_outlined,
               color: Colors.black,
+            ),
+            activeIcon: Icon(
+              Icons.analytics_outlined,
+              color: Colors.blue,
             ),
           ),
         ],
