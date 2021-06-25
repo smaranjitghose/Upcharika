@@ -115,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
             height: 250.0,),
             SizedBox(
               width: 340,
-              height: 100,
+              height: 50,
             ),
             Text("Made with ❤️ in Open Source by 🇮🇳")
           ],
