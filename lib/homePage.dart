@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 import 'dart:ui';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:upcharika/HeartRate.dart';
 import 'package:wakelock/wakelock.dart';
 import 'chart.dart';
+import 'package:path_provider/path_provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -32,6 +35,8 @@ class HomePageView extends State<HomePage>
   Timer _timerImage, // timer for image processing
       _timer; // timer for timer
   int seconds = 60;
+  List data = [];
+  bool done = true;
 
   @override
   void initState() {
@@ -79,11 +84,11 @@ class HomePageView extends State<HomePage>
     if (inbackground) {
       _controller
           .setFlashMode(FlashMode.off); // this is used to stop the flash light
-      _untoggle(); // to stop the BPM estimating process and animation
+      _untoggle(); // to stop the BPM estimating process and animation of the button
       setState(() {
-        buttonText = 'Check Heart Rate'; // to set button text
+        buttonText = 'Check Heart Rate'; // to set button text to Check Heart Rate
         _bpm =
-            0; // to set _bpm to 0 when the app goes in background and BPM estimation is stopped
+            0; // to set _bpm to 0 when the app goes in background and BPM estimation process is stopped
         _timer.cancel(); // to cancel the timer when the app moves in background
         seconds =
             60; // setting seconds to original value after timer is stopped
@@ -188,27 +193,45 @@ class HomePageView extends State<HomePage>
               child: Center(
                 child: Column(
                   children: [
-                    Transform.scale(
-                      scale: _buttonScale,
-                      child: MaterialButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)),
-                        child: Text(
-                          buttonText,
-                          style: TextStyle(color: Colors.white, fontSize: 15),
-                        ),
-                        color: Colors.blue,
-                        onPressed: () {
-                          if (_toggled) {
-                            buttonText = "Check Heart Rate";
-                            _untoggle();
-                          } else {
-                            buttonText = "Stop";
-                            _toggle();
-                          }
-                        },
-                      ),
-                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Transform.scale(
+                            scale: _buttonScale,
+                            child: MaterialButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30)),
+                              child: Text(
+                                buttonText,
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 15),
+                              ),
+                              color: Colors.blue,
+                              onPressed: () {
+                                if (_toggled) {
+                                  buttonText = "Check Heart Rate";
+                                  _untoggle();
+                                } else {
+                                  buttonText = "Stop";
+                                  _toggle();
+                                }
+                              },
+                            ),
+                          ),
+                          MaterialButton(
+                              child: Text(
+                                "Records",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 15),
+                              ),
+                              color: Colors.blue,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30)),
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => HeartRate()));
+                              }),
+                        ]),
                     SizedBox(
                       width: 20,
                       height: 20,
@@ -399,6 +422,7 @@ class HomePageView extends State<HomePage>
           _untoggle(); // stop the BPM estimation process when the timer reached to 0
           buttonText =
               "Check Heart Rate"; // when the timer stops change the text to Check Heart Rate because BPM process is stopped
+          _save(); // here save method is called to save the BPM value when timer is over
         });
       } else {
         setState(() {
@@ -407,5 +431,36 @@ class HomePageView extends State<HomePage>
         });
       }
     });
+  }
+
+  // this is the method to save the BPM values in the text file in the external storage of your device
+  _save() async {
+    List list = _dateTime().split(
+        " "); // here we are spiliting the string form " " which contains date and time and storing the returned list to a list
+    String date = list[0].toString(); // 1st element of the list is date
+    String time = list[1].toString().substring(0,
+        5); // 2nd element of the list is the time from it we are only taking 1st five characters
+    final directory =
+        await getExternalStorageDirectory(); // this function is called to get the external storage directory
+    final file = File(
+        '${directory.path}/heartRate.txt'); // here we are creating a heartRate.txt file in the external storage directory
+    final text = "\n" +
+        date +
+        " " +
+        time +
+        " " +
+        _bpm.toString(); // here we are making a string which we will store in the text file
+    await file.writeAsString(text,
+        mode: FileMode
+            .append); // here we are writing the string to the text file in the append mode
+    print('saved');
+  }
+
+  // this is the function to get the current date and time
+  String _dateTime() {
+    DateTime now = new DateTime
+        .now(); // this is the datetime class from where we are getting current date and time
+    return now
+        .toString(); // here we are returning date and time in the form of string
   }
 }
