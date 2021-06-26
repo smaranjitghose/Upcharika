@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:upcharika/Dashboard.dart';
+import 'package:upcharika/HeartRate.dart';
+import 'package:upcharika/Home.dart';
 import 'package:upcharika/homePage.dart';
-import 'package:upcharika/onboardingScreen.dart';
+import 'package:upcharika/Level.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,30 +17,30 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: OnboardingScreen(),
+      debugShowCheckedModeBanner: false,
+      home: BottomNavbar(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
-
+// ------------------this class is for bottom navigation------------
+class BottomNavbar extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _BottomNavbarState createState() => _BottomNavbarState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  String istapped = '';
-  void _incrementCounter() {
+class _BottomNavbarState extends State<BottomNavbar> {
+  int _currentIndex = 0;
+  final List<Widget> _children = [
+    MyHomePage(),
+    Dashboard(),
+    HeartRate(),
+    Level(),
+  ];
+
+  void onTappedBar(int index) {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      _currentIndex = index;
     });
   }
 
@@ -45,78 +48,58 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('Upcharika'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("Welcome to Upcharika",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
-            SizedBox(
-              width: 20,
-              height: 20,
-            ),
-            Text(
-              "A unique flutter application aimed at helping people getting their vitals using Photoplethysmography and Computer Vision",
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              width: 20,
-              height: 20,
-            ),
-            MaterialButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30)),
-              padding: const EdgeInsets.all(20),
-              textColor: Colors.white,
+      body: _children[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        onTap: onTappedBar,
+        currentIndex: _currentIndex,
+        backgroundColor: Colors.white,
+        items: [
+          BottomNavigationBarItem(
+            label: 'Home',
+            icon: Icon(
+                Icons.home_outlined, color:
+                Colors.black),
+            activeIcon: Icon(
+              Icons.home_outlined,
               color: Colors.blue,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomePage()),
-                );
-              },
-              child: Text(
-                'Check Your Heart Rate',
-                style: TextStyle(fontSize: 15),
-              ),
             ),
-            SizedBox(
-              width: 20,
-              height: 20,
-            ),
-            MaterialButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30)),
-              padding: const EdgeInsets.all(20),
-              textColor: Colors.white,
+          ),
+          BottomNavigationBarItem(
+            label: 'Dashboard',
+            icon: Icon(
+                Icons.account_box_outlined,
+                color: Colors.black),
+            activeIcon: Icon(
+              Icons.account_box_outlined,
               color: Colors.blue,
-              onPressed: () {
-                setState(() {
-                  istapped = 'Coming Soon.';
-                });
-              },
-              child: Text(
-                'Check SpO\u2082 levels',
-                style: TextStyle(fontSize: 15),
-              ),
             ),
-            SizedBox(
-              width: 20,
-              height: 20,
+          ),
+          BottomNavigationBarItem(
+            label: 'Heart Rate',
+            icon: Icon(
+              Icons.rate_review_outlined,
+              color: Colors.black,
             ),
-            Text(
-              istapped,
-              textScaleFactor: 1,
+            activeIcon: Icon(
+              Icons.rate_review_outlined,
+              color: Colors.blue,
             ),
-            SizedBox(
-              width: 340,
-              height: 340,
+          ),
+          BottomNavigationBarItem(
+            label: 'Spo2 Level',
+            icon: Icon(
+              Icons.analytics_outlined,
+              color: Colors.black,
             ),
-            Text("Made with ❤️ in Open Source by 🇮🇳")
-          ],
-        ),
+            activeIcon: Icon(
+              Icons.analytics_outlined,
+              color: Colors.blue,
+            ),
+          ),
+        ],
       ),
     );
   }
