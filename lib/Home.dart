@@ -81,11 +81,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(fontSize: 15),
               ),
             ),
-
-
+            Image(
+              image: AssetImage("assets/Upcharika.png"),
+              width: 300,
+              height: 200,
+            ),
             SizedBox(
               width: 340,
-              height: 300,
+              height: 60,
             ),
             Text("Made with ❤️ in 🇮🇳")
           ],
