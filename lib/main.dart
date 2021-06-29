@@ -5,7 +5,15 @@ import 'package:upcharika/Home.dart';
 import 'package:upcharika/homePage.dart';
 import 'package:upcharika/Level.dart';
 
-void main() {
+int firstRun; // variable which will decide where our app will go
+Future<void> main() async {
+  WidgetsFlutterBinding
+      .ensureInitialized(); // this is used to bind the Framework to Flutter engine
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  firstRun = prefs.getInt("firstRun"); // getting the value of variable firstRun
+  await prefs.setInt(
+      "firstRun", 1); // setting 1 to the location of firstRun variable
+  print('firstRun $firstRun');
   runApp(MyApp());
 }
 
@@ -18,7 +26,15 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: BottomNavbar(),
+      // making the route where the app will be directed
+      // if firstRun is null or 0 route will set to first or if other than that so it will set to other
+      initialRoute: firstRun == 0 || firstRun == null ? "first" : "other",
+      routes: {
+        // if route is first then move to OnboardingScreen
+        "first": (context) => OnboardingScreen(),
+        // if route is other then move to BottomNavbar
+        "other": (context) => BottomNavbar(),
+      },
     );
   }
 }
