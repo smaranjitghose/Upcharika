@@ -165,6 +165,8 @@ class HomePageView extends State<HomePage>
                           CountDownTimer(
                             width: 150,
                             height: 150,
+                            bgColor: Colors.blue[100],
+                            color: Colors.blue,
                             current: seconds,
                             total: 60,
                             bpm: _bpm,

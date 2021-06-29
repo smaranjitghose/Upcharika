@@ -57,8 +57,8 @@ class CountDownTimer extends StatelessWidget {
     this.width = 200,
     this.height = 200,
     this.fontSize = 32.0,
-    this.bgColor = Colors.black,
-    this.color = Colors.red,
+    this.bgColor,
+    this.color,
     this.textColor = Colors.black,
     this.bpm,
   });
