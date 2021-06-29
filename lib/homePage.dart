@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:upcharika/HeartRate.dart';
+import 'package:upcharika/timer.dart';
 import 'package:wakelock/wakelock.dart';
 import 'chart.dart';
 import 'package:path_provider/path_provider.dart';
@@ -86,7 +87,8 @@ class HomePageView extends State<HomePage>
           .setFlashMode(FlashMode.off); // this is used to stop the flash light
       _untoggle(); // to stop the BPM estimating process and animation of the button
       setState(() {
-        buttonText = 'Check Heart Rate'; // to set button text to Check Heart Rate
+        buttonText =
+            'Check Heart Rate'; // to set button text to Check Heart Rate
         _bpm =
             0; // to set _bpm to 0 when the app goes in background and BPM estimation process is stopped
         _timer.cancel(); // to cancel the timer when the app moves in background
@@ -160,25 +162,25 @@ class HomePageView extends State<HomePage>
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Text(
-                            "Timer",
-                            style: TextStyle(fontSize: 18, color: Colors.grey),
+                          CountDownTimer(
+                            width: 150,
+                            height: 150,
+                            bgColor: Colors.blue[100],
+                            color: Colors.blue,
+                            current: seconds,
+                            total: 60,
+                            bpm: _bpm,
                           ),
-                          Text(
-                            '$seconds',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 32),
-                          ),
-                          Text(
-                            "Estimated Heart Rate(BPM)",
-                            style: TextStyle(fontSize: 18, color: Colors.grey),
-                            textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            (_bpm > 30 && _bpm < 150 ? _bpm.toString() : "--"),
-                            style: TextStyle(
-                                fontSize: 32, fontWeight: FontWeight.bold),
-                          ),
+                          // Text(
+                          //   "Estimated Heart Rate(BPM)",
+                          //   style: TextStyle(fontSize: 18, color: Colors.grey),
+                          //   textAlign: TextAlign.center,
+                          // ),
+                          // Text(
+                          //   (_bpm > 30 && _bpm < 150 ? _bpm.toString() : "--"),
+                          //   style: TextStyle(
+                          //       fontSize: 32, fontWeight: FontWeight.bold),
+                          // ),
                         ],
                       )),
                     ),
