@@ -77,9 +77,7 @@ class OnboardingScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                MyHomePage(title: 'Upcharika')),
+                        MaterialPageRoute(builder: (context) => BottomNavbar()),
                         (route) => false);
                   },
                   child: Text(
