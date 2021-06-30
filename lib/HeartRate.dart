@@ -37,11 +37,6 @@ class _HeartRateState extends State<HeartRate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Heart Rate Values",
-        ),
-      ),
       body: FutureBuilder<List<List>>(
         future:
             _read(), // this is the function which will return data to us in future
