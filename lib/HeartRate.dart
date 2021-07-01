@@ -54,7 +54,7 @@ class _HeartRateState extends State<HeartRate> {
                   child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Image.asset('assets/nodata.png'),
+                  Image.asset('assets/nofile.png'),
                   Text(
                     "No data to show",
                     style: TextStyle(
