@@ -1,3 +1,4 @@
+import 'package:day_night_switcher/day_night_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:upcharika/Dashboard.dart';
@@ -20,15 +21,16 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  bool isDarkMode = false;
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Upcharika',
-      themeMode: ThemeMode.system,
-      theme: MyThemes.lightTheme(context),
-      darkTheme: MyThemes.darkTheme(context),
       debugShowCheckedModeBanner: false,
       // making the route where the app will be directed
       // if firstRun is null or 0 route will set to first or if other than that so it will set to other
@@ -50,6 +52,7 @@ class BottomNavbar extends StatefulWidget {
 }
 
 class _BottomNavbarState extends State<BottomNavbar> {
+  bool isDarkModeEnabled = false;
   int _currentIndex = 0;
   final List<Widget> _children = [
     MyHomePage(),
@@ -66,59 +69,78 @@ class _BottomNavbarState extends State<BottomNavbar> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Upcharika'),
-      ),
-      body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        onTap: onTappedBar,
-        currentIndex: _currentIndex,
-        // backgroundColor: Colors.white,
-        items: [
-          BottomNavigationBarItem(
-            label: 'Home',
-            icon: Icon(
-              Icons.home_outlined,
+    return MaterialApp(
+      themeMode: isDarkModeEnabled ? ThemeMode.dark : ThemeMode.light,
+      theme: MyThemes.lightTheme(context),
+      darkTheme: MyThemes.darkTheme(context),
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Upcharika'),
+          actions: <Widget>[
+            DayNightSwitcher(
+              
+              isDarkModeEnabled: isDarkModeEnabled,
+              onStateChanged: onStateChanged,
             ),
-            activeIcon: Icon(
-              Icons.home_outlined,
-              color: Colors.blue,
+          ],
+        ),
+        body: _children[_currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          onTap: onTappedBar,
+          currentIndex: _currentIndex,
+          // backgroundColor: Colors.white,
+          items: [
+            BottomNavigationBarItem(
+              label: 'Home',
+              icon: Icon(
+                Icons.home_outlined,
+              ),
+              activeIcon: Icon(
+                Icons.home_outlined,
+                color: Colors.blue,
+              ),
             ),
-          ),
-          BottomNavigationBarItem(
-            label: 'Dashboard',
-            icon: Icon(
-              Icons.account_box_outlined,
+            BottomNavigationBarItem(
+              label: 'Dashboard',
+              icon: Icon(
+                Icons.account_box_outlined,
+              ),
+              activeIcon: Icon(
+                Icons.account_box_outlined,
+                color: Colors.blue,
+              ),
             ),
-            activeIcon: Icon(
-              Icons.account_box_outlined,
-              color: Colors.blue,
+            BottomNavigationBarItem(
+              label: 'Heart Rate',
+              icon: Icon(
+                Icons.rate_review_outlined,
+              ),
+              activeIcon: Icon(
+                Icons.rate_review_outlined,
+                color: Colors.blue,
+              ),
             ),
-          ),
-          BottomNavigationBarItem(
-            label: 'Heart Rate',
-            icon: Icon(
-              Icons.rate_review_outlined,
+            BottomNavigationBarItem(
+              label: 'Spo2 Level',
+              icon: Icon(
+                Icons.analytics_outlined,
+              ),
+              activeIcon: Icon(
+                Icons.analytics_outlined,
+                color: Colors.blue,
+              ),
             ),
-            activeIcon: Icon(
-              Icons.rate_review_outlined,
-              color: Colors.blue,
-            ),
-          ),
-          BottomNavigationBarItem(
-            label: 'Spo2 Level',
-            icon: Icon(
-              Icons.analytics_outlined,
-            ),
-            activeIcon: Icon(
-              Icons.analytics_outlined,
-              color: Colors.blue,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
+  }
+
+  void onStateChanged(bool isDarkModeEnabled) {
+    setState(() {
+      this.isDarkModeEnabled = isDarkModeEnabled;
+    });
   }
 }
