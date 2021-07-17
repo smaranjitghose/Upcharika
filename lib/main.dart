@@ -21,6 +21,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
+  bool isDarkMode = false;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

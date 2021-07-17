@@ -8,6 +8,7 @@ import 'package:upcharika/timer.dart';
 import 'package:wakelock/wakelock.dart';
 import 'chart.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -132,7 +133,7 @@ class HomePageView extends State<HomePage>
                                   : Container(
                                       padding: EdgeInsets.all(12),
                                       alignment: Alignment.center,
-                                      color: Color(0xFF1D2740),
+                                      color: context.theme.cardColor,
                                     ),
                               Container(
                                 alignment: Alignment.center,
@@ -206,7 +207,7 @@ class HomePageView extends State<HomePage>
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 15),
                               ),
-                              color: Colors.blue,
+                              color: context.theme.buttonColor,
                               onPressed: () {
                                 if (_toggled) {
                                   buttonText = "Check Heart Rate";
@@ -224,7 +225,7 @@ class HomePageView extends State<HomePage>
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 15),
                               ),
-                              color: Colors.blue,
+                              color: context.theme.buttonColor,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30)),
                               onPressed: () {

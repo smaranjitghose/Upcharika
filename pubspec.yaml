@@ -33,6 +33,8 @@ dependencies:
   path_provider: ^2.0.2
   flutter_card_swipper: ^0.4.0
   shared_preferences: ^2.0.6
+  day_night_switcher: ^0.2.0+1
+  velocity_x: ^1.4.1
 
 dev_dependencies:
   flutter_test:
