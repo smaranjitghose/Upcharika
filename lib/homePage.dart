@@ -132,7 +132,7 @@ class HomePageView extends State<HomePage>
                                   : Container(
                                       padding: EdgeInsets.all(12),
                                       alignment: Alignment.center,
-                                      color: Colors.grey,
+                                      color: Color(0xFF1D2740),
                                     ),
                               Container(
                                 alignment: Alignment.center,

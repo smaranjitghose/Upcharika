@@ -78,7 +78,9 @@ class _BottomNavbarState extends State<BottomNavbar> {
         items: [
           BottomNavigationBarItem(
             label: 'Home',
-            icon: Icon(Icons.home_outlined, color: Colors.black),
+            icon: Icon(
+              Icons.home_outlined,
+            ),
             activeIcon: Icon(
               Icons.home_outlined,
               color: Colors.blue,
@@ -86,7 +88,9 @@ class _BottomNavbarState extends State<BottomNavbar> {
           ),
           BottomNavigationBarItem(
             label: 'Dashboard',
-            icon: Icon(Icons.account_box_outlined, color: Colors.black),
+            icon: Icon(
+              Icons.account_box_outlined,
+            ),
             activeIcon: Icon(
               Icons.account_box_outlined,
               color: Colors.blue,
@@ -96,7 +100,6 @@ class _BottomNavbarState extends State<BottomNavbar> {
             label: 'Heart Rate',
             icon: Icon(
               Icons.rate_review_outlined,
-              color: Colors.black,
             ),
             activeIcon: Icon(
               Icons.rate_review_outlined,
@@ -107,7 +110,6 @@ class _BottomNavbarState extends State<BottomNavbar> {
             label: 'Spo2 Level',
             icon: Icon(
               Icons.analytics_outlined,
-              color: Colors.black,
             ),
             activeIcon: Icon(
               Icons.analytics_outlined,

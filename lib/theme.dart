@@ -7,13 +7,21 @@ class MyThemes {
         iconTheme: IconThemeData(
           color: Colors.white,
         ),
+        appBarTheme: AppBarTheme(
+          color: Color(0xFF0B1328),
+          elevation: 4,
+        ),
       );
 
   static ThemeData darkTheme(BuildContext context) => ThemeData(
         brightness: Brightness.dark,
-        cardColor: Colors.grey,
+        cardColor: Color(0xFF1D2740),
+        canvasColor: Color(0xFF0B1328),
         iconTheme: IconThemeData(
-          color: Colors.black,
+          color: Colors.white,
+        ),
+        appBarTheme: AppBarTheme(
+          color: Color(0xFF0B1328),
         ),
       );
 }
