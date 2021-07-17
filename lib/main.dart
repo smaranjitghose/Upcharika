@@ -4,6 +4,7 @@ import 'package:upcharika/Dashboard.dart';
 import 'package:upcharika/HeartRate.dart';
 import 'package:upcharika/Home.dart';
 import 'package:upcharika/Level.dart';
+import 'package:upcharika/theme.dart';
 
 import 'onboardingScreen.dart';
 
@@ -24,9 +25,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Upcharika',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      themeMode: ThemeMode.system,
+      theme: MyThemes.lightTheme(context),
+      darkTheme: MyThemes.darkTheme(context),
       debugShowCheckedModeBanner: false,
       // making the route where the app will be directed
       // if firstRun is null or 0 route will set to first or if other than that so it will set to other
@@ -73,7 +74,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
         type: BottomNavigationBarType.fixed,
         onTap: onTappedBar,
         currentIndex: _currentIndex,
-        backgroundColor: Colors.white,
+        // backgroundColor: Colors.white,
         items: [
           BottomNavigationBarItem(
             label: 'Home',

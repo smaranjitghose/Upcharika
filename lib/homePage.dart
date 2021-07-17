@@ -103,7 +103,6 @@ class HomePageView extends State<HomePage>
       appBar: AppBar(
         title: Text("Upcharika"),
       ),
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: <Widget>[
@@ -169,6 +168,7 @@ class HomePageView extends State<HomePage>
                             current: seconds,
                             total: 60,
                             bpm: _bpm,
+                            textColor: Colors.white,
                           ),
                           // Text(
                           //   "Estimated Heart Rate(BPM)",
