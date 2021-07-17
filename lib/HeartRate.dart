@@ -37,7 +37,6 @@ class _HeartRateState extends State<HeartRate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
       body: FutureBuilder<List<List>>(
         future:
             _read(), // this is the function which will return data to us in future
@@ -70,7 +69,6 @@ class _HeartRateState extends State<HeartRate> {
                     itemCount: snapshot.data.length,
                     itemBuilder: (context, index) {
                       return Card(
-                        color: Colors.blue[100],
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
                         child: ListTile(

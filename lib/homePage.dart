@@ -168,7 +168,6 @@ class HomePageView extends State<HomePage>
                             current: seconds,
                             total: 60,
                             bpm: _bpm,
-                            textColor: Colors.white,
                           ),
                           // Text(
                           //   "Estimated Heart Rate(BPM)",
