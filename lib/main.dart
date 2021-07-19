@@ -1,9 +1,13 @@
+import 'package:day_night_switcher/day_night_switcher.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:upcharika/Dashboard.dart';
 import 'package:upcharika/HeartRate.dart';
 import 'package:upcharika/Home.dart';
-import 'package:upcharika/homePage.dart';
 import 'package:upcharika/Level.dart';
+import 'package:upcharika/theme.dart';
+
+import 'onboardingScreen.dart';
 
 int firstRun; // variable which will decide where our app will go
 Future<void> main() async {
@@ -17,14 +21,16 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Upcharika',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       debugShowCheckedModeBanner: false,
       // making the route where the app will be directed
       // if firstRun is null or 0 route will set to first or if other than that so it will set to other
@@ -46,6 +52,7 @@ class BottomNavbar extends StatefulWidget {
 }
 
 class _BottomNavbarState extends State<BottomNavbar> {
+  bool isDarkModeEnabled = false;
   int _currentIndex = 0;
   final List<Widget> _children = [
     MyHomePage(),
@@ -62,57 +69,78 @@ class _BottomNavbarState extends State<BottomNavbar> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Upcharika'),
-      ),
-      body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        onTap: onTappedBar,
-        currentIndex: _currentIndex,
-        backgroundColor: Colors.white,
-        items: [
-          BottomNavigationBarItem(
-            label: 'Home',
-            icon: Icon(Icons.home_outlined, color: Colors.black),
-            activeIcon: Icon(
-              Icons.home_outlined,
-              color: Colors.blue,
+    return MaterialApp(
+      themeMode: isDarkModeEnabled ? ThemeMode.dark : ThemeMode.light,
+      theme: MyThemes.lightTheme(context),
+      darkTheme: MyThemes.darkTheme(context),
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Upcharika'),
+          actions: <Widget>[
+            DayNightSwitcher(
+              
+              isDarkModeEnabled: isDarkModeEnabled,
+              onStateChanged: onStateChanged,
             ),
-          ),
-          BottomNavigationBarItem(
-            label: 'Dashboard',
-            icon: Icon(Icons.account_box_outlined, color: Colors.black),
-            activeIcon: Icon(
-              Icons.account_box_outlined,
-              color: Colors.blue,
+          ],
+        ),
+        body: _children[_currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          onTap: onTappedBar,
+          currentIndex: _currentIndex,
+          // backgroundColor: Colors.white,
+          items: [
+            BottomNavigationBarItem(
+              label: 'Home',
+              icon: Icon(
+                Icons.home_outlined,
+              ),
+              activeIcon: Icon(
+                Icons.home_outlined,
+                color: Colors.blue,
+              ),
             ),
-          ),
-          BottomNavigationBarItem(
-            label: 'Heart Rate',
-            icon: Icon(
-              Icons.rate_review_outlined,
-              color: Colors.black,
+            BottomNavigationBarItem(
+              label: 'Dashboard',
+              icon: Icon(
+                Icons.account_box_outlined,
+              ),
+              activeIcon: Icon(
+                Icons.account_box_outlined,
+                color: Colors.blue,
+              ),
             ),
-            activeIcon: Icon(
-              Icons.rate_review_outlined,
-              color: Colors.blue,
+            BottomNavigationBarItem(
+              label: 'Heart Rate',
+              icon: Icon(
+                Icons.rate_review_outlined,
+              ),
+              activeIcon: Icon(
+                Icons.rate_review_outlined,
+                color: Colors.blue,
+              ),
             ),
-          ),
-          BottomNavigationBarItem(
-            label: 'Spo2 Level',
-            icon: Icon(
-              Icons.analytics_outlined,
-              color: Colors.black,
+            BottomNavigationBarItem(
+              label: 'Spo2 Level',
+              icon: Icon(
+                Icons.analytics_outlined,
+              ),
+              activeIcon: Icon(
+                Icons.analytics_outlined,
+                color: Colors.blue,
+              ),
             ),
-            activeIcon: Icon(
-              Icons.analytics_outlined,
-              color: Colors.blue,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
+  }
+
+  void onStateChanged(bool isDarkModeEnabled) {
+    setState(() {
+      this.isDarkModeEnabled = isDarkModeEnabled;
+    });
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:upcharika/homePage.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -49,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   borderRadius: BorderRadius.circular(30)),
               padding: const EdgeInsets.all(20),
               textColor: Colors.white,
-              color: Colors.blue,
+              color: context.theme.buttonColor,
               onPressed: () {
                 Navigator.push(
                   context,
@@ -70,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   borderRadius: BorderRadius.circular(30)),
               padding: const EdgeInsets.all(20),
               textColor: Colors.white,
-              color: Colors.blue,
+              color: context.theme.buttonColor,
               onPressed: () {
                 setState(() {
                   istapped = 'Coming Soon.';
