@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swipper/flutter_card_swiper.dart';
-
-import 'main.dart';
+import 'package:upcharika/auth/pages/auth_screen.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({Key key}) : super(key: key);
@@ -75,7 +74,7 @@ class OnboardingScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (context) => BottomNavbar()),
+                        MaterialPageRoute(builder: (context) => AuthenticationScreen()),
                         (route) => false);
                   },
                   child: Text(

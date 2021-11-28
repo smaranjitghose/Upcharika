@@ -8,10 +8,10 @@ A unique flutter application aimed at helping people getting their vitals using 
 - [ ] Use the camera and flash sensors to calcuate SP02
 - [ ] Make a dashboard for storing periodic readings
 - [ ] User Profile 
-- [ ] Login Page
-- [ ] Sign Up Page
+- [x] Login Page
+- [x] Sign Up Page
 - [ ] Splash Screen
-- [ ] Firebase/Supabase Intergration for Authentication
+- [x] Firebase/Supabase Intergration for Authentication
 - [ ] Generate Reports
 
 ### Our hard-working Project Maintainers👨‍🏫:
