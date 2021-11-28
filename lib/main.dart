@@ -1,6 +1,7 @@
 import 'package:day_night_switcher/day_night_switcher.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:upcharika/Dashboard.dart';
 import 'package:upcharika/HeartRate.dart';
@@ -8,6 +9,7 @@ import 'package:upcharika/Home.dart';
 import 'package:upcharika/Level.dart';
 import 'package:upcharika/auth/pages/auth_screen.dart';
 import 'package:upcharika/auth/service/auth_service.dart';
+import 'package:upcharika/models/user.dart';
 import 'package:upcharika/theme.dart';
 
 import 'onboardingScreen.dart';
@@ -23,7 +25,8 @@ Future<void> main() async {
   print('firstRun $firstRun');
 
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(
+      ChangeNotifierProvider(create: (context) => LocalUser(), child: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -61,7 +64,11 @@ class HomeController extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.active) {
           bool signedIn = snapshot.hasData;
 
-          return signedIn ? BottomNavbar() : AuthenticationScreen();
+          if (signedIn) {
+            Provider.of<LocalUser>(context).user = AuthService().getUser;
+            return BottomNavbar();
+          }
+          return AuthenticationScreen();
         }
         return Center(child: CircularProgressIndicator());
       },

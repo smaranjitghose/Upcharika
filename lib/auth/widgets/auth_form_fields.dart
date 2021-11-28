@@ -3,19 +3,22 @@ import 'package:upcharika/auth/service/auth_service.dart';
 import 'package:upcharika/main.dart';
 
 class AuthFormFields extends StatefulWidget {
-  const AuthFormFields({Key key}) : super(key: key);
+  const AuthFormFields({Key key, this.authType}) : super(key: key);
+
+  final AuthType authType;
 
   @override
   _AuthFormFieldsState createState() => _AuthFormFieldsState();
 }
 
-enum AuthType { Login, Signup, Reset }
+enum AuthType { Login, Signup, Reset, Verify }
 
 class _AuthFormFieldsState extends State<AuthFormFields> {
   final _formKey = GlobalKey<FormState>();
   AuthType authType = AuthType.Signup;
 
   TextEditingController _emailController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
   AuthService authService = AuthService();
@@ -44,7 +47,7 @@ class _AuthFormFieldsState extends State<AuthFormFields> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  getStringAuthType(authType),
+                  getStringAuthType(widget.authType ?? authType),
                   style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
@@ -68,6 +71,23 @@ class _AuthFormFieldsState extends State<AuthFormFields> {
                           if (value.isEmpty) return "Please enter a password";
                           return null;
                         },
+                      ),
+                      SizedBox(height: 20),
+                      Visibility(
+                        visible: authType == AuthType.Signup,
+                        child: TextFormField(
+                          controller: _nameController,
+                          decoration: InputDecoration(
+                            labelText: "Name",
+                            alignLabelWithHint: true,
+                            labelStyle: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          validator: (value) {
+                            if (value.isEmpty) return "Please enter your name";
+                            return null;
+                          },
+                        ),
                       ),
                       SizedBox(height: 20),
                       TextFormField(
@@ -162,7 +182,7 @@ class _AuthFormFieldsState extends State<AuthFormFields> {
                             case AuthType.Signup:
                               await authService.signUpWithEmailAndPassword(
                                   _emailController.text,
-                                  _passwordController.text);
+                                  _passwordController.text, _nameController.text);
                               break;
                             case AuthType.Reset:
                               await authService.reset(_emailController.text);
@@ -209,7 +229,7 @@ class _AuthFormFieldsState extends State<AuthFormFields> {
                       }
                     },
                     child: Text(
-                      getStringAuthType(authType).replaceAll('-', ""),
+                      getStringAuthType(widget.authType ?? authType).replaceAll('-', ""),
                       style: TextStyle(fontSize: 25),
                     ),
                   ),

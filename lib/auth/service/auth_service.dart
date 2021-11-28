@@ -1,12 +1,15 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class AuthService {
+class AuthService extends ChangeNotifier {
   FirebaseAuth auth = FirebaseAuth.instance;
   Stream<String> get onAuthStateChanged =>
       auth.authStateChanges().map((User user) => user?.uid);
+
+  User get getUser => auth.currentUser;
 
   Future<String> login(String email, String password) async {
     try {
@@ -19,10 +22,12 @@ class AuthService {
   }
 
   Future<String> signUpWithEmailAndPassword(
-      String email, String password) async {
+      String email, String password, String name) async {
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
+
+      await userCredential.user.updateProfile(displayName: name);
       return userCredential.user.uid;
     } catch (e) {
       throw e;

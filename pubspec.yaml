@@ -35,6 +35,7 @@ dependencies:
   day_night_switcher: ^0.2.0+1
   velocity_x: ^1.4.1
 
+  provider: 
   auth_buttons: 
   firebase_core:
   firebase_auth: 
