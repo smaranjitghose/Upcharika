@@ -17,7 +17,8 @@ class AuthService {
     }
   }
 
-  Future<String> signUpWithEmailAndPassword(String email, String password) async {
+  Future<String> signUpWithEmailAndPassword(
+      String email, String password) async {
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -30,6 +31,9 @@ class AuthService {
   Future continueWithGoogle() async {}
   Future continueWithFacebook() async {}
   Future continueWithApple() async {}
+
+  Future reset(String email) async =>
+      await auth.sendPasswordResetEmail(email: email);
 
   Future<void> signOut() async => await auth.signOut();
 }

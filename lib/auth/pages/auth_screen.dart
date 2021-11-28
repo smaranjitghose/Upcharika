@@ -19,7 +19,6 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
           reverse: true,
           child: Column(
             children: [
-              Image.asset("assets/login.png"),
               AuthFormFields(),
               DividerWithText(text: "Or continue with"),
               SocialAuth(),
