@@ -7,7 +7,7 @@ A unique flutter application aimed at helping people getting their vitals using 
 - [ ] Use the camera and flash sensors to calculate Heart Rate
 - [ ] Use the camera and flash sensors to calcuate SP02
 - [ ] Make a dashboard for storing periodic readings
-- [ ] User Profile 
+- [x] User Profile 
 - [ ] Login Page
 - [ ] Sign Up Page
 - [ ] Splash Screen
