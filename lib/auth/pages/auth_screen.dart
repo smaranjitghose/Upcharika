@@ -1,4 +1,3 @@
-import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:upcharika/auth/widgets/auth_form_fields.dart';
 import 'package:upcharika/auth/widgets/social_auth.dart';

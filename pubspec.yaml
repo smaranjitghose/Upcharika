@@ -38,7 +38,8 @@ dependencies:
   auth_buttons: 
   firebase_core:
   firebase_auth: 
-
+  google_sign_in:
+    
   charts_flutter:
     git:
       url: git://github.com/google/charts.git

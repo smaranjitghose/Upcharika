@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -28,9 +29,17 @@ class AuthService {
     }
   }
 
-  Future continueWithGoogle() async {}
-  Future continueWithFacebook() async {}
-  Future continueWithApple() async {}
+  Future continueWithGoogle() async {
+    GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+    GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    OAuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    UserCredential userCredential = await auth.signInWithCredential(credential);
+    return userCredential.user.uid;
+  }
 
   Future reset(String email) async =>
       await auth.sendPasswordResetEmail(email: email);
