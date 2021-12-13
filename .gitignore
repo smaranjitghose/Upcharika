@@ -22,3 +22,6 @@ doc/api/
 *.js.map
 .flutter-plugins
 .flutter-plugins-dependencies
+
+lib/generated_plugin_registrant.dart
+google-services.json

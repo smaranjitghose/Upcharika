@@ -1,10 +1,15 @@
 import 'package:day_night_switcher/day_night_switcher.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:upcharika/Dashboard.dart';
 import 'package:upcharika/HeartRate.dart';
 import 'package:upcharika/Home.dart';
 import 'package:upcharika/Level.dart';
+import 'package:upcharika/auth/pages/auth_screen.dart';
+import 'package:upcharika/auth/service/auth_service.dart';
+import 'package:upcharika/models/user.dart';
 import 'package:upcharika/theme.dart';
 
 import 'onboardingScreen.dart';
@@ -18,7 +23,10 @@ Future<void> main() async {
   await prefs.setInt(
       "firstRun", 1); // setting 1 to the location of firstRun variable
   print('firstRun $firstRun');
-  runApp(MyApp());
+
+  await Firebase.initializeApp();
+  runApp(
+      ChangeNotifierProvider(create: (context) => LocalUser(), child: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -39,7 +47,30 @@ class _MyAppState extends State<MyApp> {
         // if route is first then move to OnboardingScreen
         "first": (context) => OnboardingScreen(),
         // if route is other then move to BottomNavbar
-        "other": (context) => BottomNavbar(),
+        "other": (context) => HomeController(),
+      },
+    );
+  }
+}
+
+class HomeController extends StatelessWidget {
+  const HomeController({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: AuthService().onAuthStateChanged,
+      builder: (context, AsyncSnapshot<String> snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          bool signedIn = snapshot.hasData;
+
+          if (signedIn) {
+            Provider.of<LocalUser>(context).user = AuthService().getUser;
+            return BottomNavbar();
+          }
+          return AuthenticationScreen();
+        }
+        return Center(child: CircularProgressIndicator());
       },
     );
   }
@@ -79,7 +110,6 @@ class _BottomNavbarState extends State<BottomNavbar> {
           title: Text('Upcharika'),
           actions: <Widget>[
             DayNightSwitcher(
-              
               isDarkModeEnabled: isDarkModeEnabled,
               onStateChanged: onStateChanged,
             ),
