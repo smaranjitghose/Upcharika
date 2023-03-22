@@ -24,7 +24,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
+            children: [
               HomeHeader(),
               Text("Welcome to Upcharika",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 width: 340,
                 height: 60,
               ),
-              Text("Made with ❤️ in 🇮🇳")
+              Text("Made with ❤️ in pakistan")
             ],
           ),
         ),
